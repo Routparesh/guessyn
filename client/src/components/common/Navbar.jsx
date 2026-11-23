@@ -24,10 +24,10 @@ export default function Navbar() {
       if (!candidate) return "/avatars/1.png";
       if (typeof candidate === "number") return `/avatars/${candidate}.png`;
       if (typeof candidate === "string") {
-        if (/^https?:\/\//.test(candidate)) return candidate;           // absolute URL
-        if (candidate.startsWith("/avatars/")) return candidate;        // ready path
+        if (/^https?:\/\//.test(candidate)) return candidate; // absolute URL
+        if (candidate.startsWith("/avatars/")) return candidate; // ready path
         if (/^\d+$/.test(candidate)) return `/avatars/${candidate}.png`; // numeric string
-        return candidate;                                               // fallback as-is
+        return candidate; // fallback as-is
       }
       return "/avatars/1.png";
     } catch {
@@ -38,8 +38,8 @@ export default function Navbar() {
   const [avatarSrc, setAvatarSrc] = useState(resolveAvatar());
   useEffect(() => {
     const update = () => setAvatarSrc(resolveAvatar());
-    window.addEventListener("storage", update);     // cross-tab changes
-    window.addEventListener("focus", update);       // when tab refocuses
+    window.addEventListener("storage", update); // cross-tab changes
+    window.addEventListener("focus", update); // when tab refocuses
     window.addEventListener("avatar-updated", update); // custom event support
     return () => {
       window.removeEventListener("storage", update);
@@ -49,7 +49,8 @@ export default function Navbar() {
   }, []);
 
   // Only show logo on auth pages
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <nav className="w-full bg-black text-white font-montserrat shadow-md relative z-50">
@@ -100,7 +101,9 @@ export default function Navbar() {
               src={avatarSrc}
               onClick={() => navigate("/profile")}
               alt="profile"
-              onError={(e) => { e.currentTarget.src = "/avatars/1.png"; }}
+              onError={(e) => {
+                e.currentTarget.src = "/avatars/1.png";
+              }}
               className="w-10 h-10 rounded-full border-[2px] border-[#FFFB00] shadow-[0_0_10px_#FFFB00] cursor-pointer relative z-10"
             />
           </div>
@@ -149,7 +152,9 @@ export default function Navbar() {
               setMenuOpen(false);
             }}
             alt="profile"
-            onError={(e) => { e.currentTarget.src = "/avatars/1.png"; }}
+            onError={(e) => {
+              e.currentTarget.src = "/avatars/1.png";
+            }}
             className="w-12 h-12 rounded-full border-[2px] border-[#FFFB00] shadow-[0_0_10px_#FFFB00] cursor-pointer relative z-10"
           />
         </div>

@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css"; // <- Tailwind styles here
@@ -8,6 +8,5 @@ import "@fontsource/silkscreen";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   // REMOVE <React.StrictMode> during development
-  <App />
+  <App />,
 );
- 

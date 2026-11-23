@@ -3,7 +3,6 @@ import socket from "../socket";
 import ColorThief from "colorthief";
 import Navbar from "../components/common/Navbar";
 
-
 const GameRoom = () => {
   const [song, setSong] = useState(null);
   const [guess, setGuess] = useState("");
@@ -120,25 +119,26 @@ const GameRoom = () => {
             20 + Math.random() * 100,
             i % targetColorsRef.current.length,
             0.3 + Math.random() * 0.7,
-            (Math.random() - 0.5) * 0.02
-          )
+            (Math.random() - 0.5) * 0.02,
+          ),
         );
       }
     };
 
     const updateColors = () => {
       if (!currentColorsRef.current || !targetColorsRef.current) return;
-      
+
       for (let i = 0; i < currentColorsRef.current.length; i++) {
-        if (!currentColorsRef.current[i] || !targetColorsRef.current[i]) continue;
-        
+        if (!currentColorsRef.current[i] || !targetColorsRef.current[i])
+          continue;
+
         for (let j = 0; j < 3; j++) {
           currentColorsRef.current[i][j] +=
             (targetColorsRef.current[i][j] - currentColorsRef.current[i][j]) *
             0.1;
           if (
             Math.abs(
-              currentColorsRef.current[i][j] - targetColorsRef.current[i][j]
+              currentColorsRef.current[i][j] - targetColorsRef.current[i][j],
             ) < 1
           ) {
             currentColorsRef.current[i][j] = targetColorsRef.current[i][j];
@@ -164,11 +164,11 @@ const GameRoom = () => {
       blobsRef.current.forEach((blob) => {
         blob.x = Math.max(
           blob.radius,
-          Math.min(canvas.width - blob.radius, blob.x)
+          Math.min(canvas.width - blob.radius, blob.x),
         );
         blob.y = Math.max(
           blob.radius,
-          Math.min(canvas.height - blob.radius, blob.y)
+          Math.min(canvas.height - blob.radius, blob.y),
         );
       });
     };
@@ -258,7 +258,7 @@ const GameRoom = () => {
 
     socket.on("preload-next-song", ({ song, duration }) => {
       if (audioRef.current) {
-        audioRef.current.src = `https://www.youtube.com/embed/${song.videoId}?autoplay=1&start=0&end=${duration+3}`;
+        audioRef.current.src = `https://www.youtube.com/embed/${song.videoId}?autoplay=1&start=0&end=${duration + 3}`;
       }
     });
 
@@ -277,7 +277,11 @@ const GameRoom = () => {
       const isCurrentUser = guesser.uid === user.uid;
       setChat((prev) => [
         ...prev,
-        { system: true, type: "crct-guess", text: `✅ ${guesser.name} guessed it right!` },
+        {
+          system: true,
+          type: "crct-guess",
+          text: `✅ ${guesser.name} guessed it right!`,
+        },
       ]);
 
       if (isCurrentUser) {
@@ -327,7 +331,7 @@ const GameRoom = () => {
               </span>
             ),
           },
-        ]);        
+        ]);
       }
     });
 
@@ -427,7 +431,16 @@ const GameRoom = () => {
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
         const opacity = Math.random() * 0.05 + 0.07;
-        blobs.push({ id: i, size, x, y, speedX, speedY, opacity, color: "#FFFB00" });
+        blobs.push({
+          id: i,
+          size,
+          x,
+          y,
+          speedX,
+          speedY,
+          opacity,
+          color: "#FFFB00",
+        });
       }
       setMovingBlobs(blobs);
 
@@ -436,10 +449,12 @@ const GameRoom = () => {
           prev.map((b) => {
             let x = b.x + b.speedX;
             let y = b.y + b.speedY;
-            if (x < 0 || x > window.innerWidth - b.size) b.speedX *= -1, (x = b.x + b.speedX);
-            if (y < 0 || y > window.innerHeight - b.size) b.speedY *= -1, (y = b.y + b.speedY);
+            if (x < 0 || x > window.innerWidth - b.size)
+              ((b.speedX *= -1), (x = b.x + b.speedX));
+            if (y < 0 || y > window.innerHeight - b.size)
+              ((b.speedY *= -1), (y = b.y + b.speedY));
             return { ...b, x, y };
-          })
+          }),
         );
         rafRef.current = requestAnimationFrame(animate);
       };
@@ -475,58 +490,56 @@ const GameRoom = () => {
     return <LoadingOverlay text="Starting Game..." />;
   }
 
-if (gameOver) {
-  return (
-    <div className="h-screen bg-black text-white">
-      <Navbar />
+  if (gameOver) {
+    return (
+      <div className="h-screen bg-black text-white">
+        <Navbar />
 
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)]">
-        <h2 className="text-3xl font-bold mb-8">Game Over!</h2>
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)]">
+          <h2 className="text-3xl font-bold mb-8">Game Over!</h2>
 
-        <div className="w-64 bg-[#1a1a1ab8] rounded-[20px] p-6 shadow-2xl">
-          <h3 className="text-xl ml-5 mb-4 text-[#FFFB00] font-silkscreen glow-yellow">
-            LEADERBOARD
-          </h3>
-          {leaderboard.map((p, i) => (
-            <div key={i} className="flex justify-between mb-2 items-center">
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-[#2d2d2d69] rounded-full mr-2"></div>
-                <span className={p.uid === user.uid ? "text-[#FFFB00]" : ""}>
-                  {p.name}
-                </span>
+          <div className="w-64 bg-[#1a1a1ab8] rounded-[20px] p-6 shadow-2xl">
+            <h3 className="text-xl ml-5 mb-4 text-[#FFFB00] font-silkscreen glow-yellow">
+              LEADERBOARD
+            </h3>
+            {leaderboard.map((p, i) => (
+              <div key={i} className="flex justify-between mb-2 items-center">
+                <div className="flex items-center">
+                  <div className="w-6 h-6 bg-[#2d2d2d69] rounded-full mr-2"></div>
+                  <span className={p.uid === user.uid ? "text-[#FFFB00]" : ""}>
+                    {p.name}
+                  </span>
+                </div>
+                <span className="font-bold text-[#FFFB00]">{p.score} pts</span>
               </div>
-              <span className="font-bold text-[#FFFB00]">{p.score} pts</span>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-8 flex gap-10">
-          <a
-            href="/landing"
-            className="border-2 border-[#FFFB00] text-white font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform"
-          >
-            Go to Home
-          </a>
-          <a
-            href="/create-room"
-            className="bg-[#FFFB00] text-black font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform"
-          >
-            Play Again
-          </a>
+          <div className="mt-8 flex gap-10">
+            <a
+              href="/landing"
+              className="border-2 border-[#FFFB00] text-white font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform"
+            >
+              Go to Home
+            </a>
+            <a
+              href="/create-room"
+              className="bg-[#FFFB00] text-black font-bold py-2 px-6 rounded-xl hover:scale-105 transition-transform"
+            >
+              Play Again
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-
+    );
+  }
 
   return (
     <div className="h-screen w-screen bg-black text-white pt-5.5 flex overflow-hidden font-montserrat">
       <div className="w-1/4 h-full mr-0.5 ml-2 mt-3 mb-3 bg-[#1a1a1ab8] p-6 flex flex-col rounded-[20px] shadow-2xl overflow-hidden">
         <div className="mb-8">
           <h2 className="font-silkscreen text-[#FFFB00] text-xl mb-4 glow-yellow">
-            LEADERBOARD 
+            LEADERBOARD
           </h2>
           <div className="space-y-3 overflow-y-auto max-h-[40vh] pr-2">
             {players
@@ -584,8 +597,8 @@ if (gameOver) {
                     voteCounts[type] > 0
                       ? "bg-[#FFFB00] text-black shadow-glow-yellow"
                       : hintsUsed[type] || roundEnded
-                      ? "bg-[#3d3d3d90] cursor-not-allowed opacity-50"
-                      : "bg-[#3d3d3d47] hover:shadow-[0_0_10px_2px_#FFFB00]"
+                        ? "bg-[#3d3d3d90] cursor-not-allowed opacity-50"
+                        : "bg-[#3d3d3d47] hover:shadow-[0_0_10px_2px_#FFFB00]"
                   }`}
                 >
                   <span className="flex items-center space-x-3">
@@ -617,15 +630,15 @@ if (gameOver) {
 
         <div className="relative z-10 w-full flex flex-col items-center">
           {showPlayButton && (
-<div className="absolute inset-0 flex items-center justify-center z-20">
-  <button
-    onClick={handlePlayFirstSong}
-    className="mt-[40px] bg-[#FFFB00] hover:bg-[#FFFB00CC] text-black px-4 py-2 rounded-md text-[10px] font-bold shadow-[0_0_10px_3px_rgba(255,251,0,0.4)] transition-all"
-  >
-    PLAY SONG
-  </button>
-</div>
-)}
+            <div className="absolute inset-0 flex items-center justify-center z-20">
+              <button
+                onClick={handlePlayFirstSong}
+                className="mt-[40px] bg-[#FFFB00] hover:bg-[#FFFB00CC] text-black px-4 py-2 rounded-md text-[10px] font-bold shadow-[0_0_10px_3px_rgba(255,251,0,0.4)] transition-all"
+              >
+                PLAY SONG
+              </button>
+            </div>
+          )}
 
           <div className="bg-[#000000AA]/45 px-6 py-2 rounded-md mb-6">
             <h2 className="text-[#FFFB00] text-xl font-bold">
@@ -633,23 +646,22 @@ if (gameOver) {
                 ? `Round Over - Next in ${countdown}s`
                 : `Round ${round} - ${timer}s left`}
             </h2>
-
           </div>
-<div
-  className={`bg-[#2D2D2D]/45 p-4 rounded-lg mb-5 transition-all duration-500 text-center ${
-    roundEnded ? "" : "filter blur-md"
-  }`}
->
-  <div className="flex justify-center items-center space-x-2 text-[#FFFB00]">
-    <img src="/film.png" alt="Movie" className="w-4 h-4" />
-    <span>
-      {roundEnded ? `${song.song}` : "Hidden"}
-      {/* {roundEnded && (
+          <div
+            className={`bg-[#2D2D2D]/45 p-4 rounded-lg mb-5 transition-all duration-500 text-center ${
+              roundEnded ? "" : "filter blur-md"
+            }`}
+          >
+            <div className="flex justify-center items-center space-x-2 text-[#FFFB00]">
+              <img src="/film.png" alt="Movie" className="w-4 h-4" />
+              <span>
+                {roundEnded ? `${song.song}` : "Hidden"}
+                {/* {roundEnded && (
         <span className="text-white italic">{song.movie}</span>
       )} */}
-    </span>
-  </div>
-</div>
+              </span>
+            </div>
+          </div>
 
           <div className="relative mb-8 group">
             <div
@@ -682,17 +694,21 @@ if (gameOver) {
             >
               <div className="flex items-center space-x-2 text-[#FFFB00]">
                 <img src="/film.png" alt="Movie" className="w-4 h-4" />
-<span>
-  {hintRevealed.movie
-    ? song.movie
-        .replace(/\s*[\--]?\s*\(.*?(original motion picture soundtrack|ost|from.*?)\)/gi, "") // remove entire (Original Motion Picture Soundtrack)
-        .replace(/\s*[\--]?\s*(original motion picture soundtrack|ost|from.*)/gi, "") // fallback for non-parentheses versions
-        .replace(/\s*\)+$/, "") // remove leftover closing parenthesis
-        .trim()
-    : "Hidden"}
-</span>
-
-
+                <span>
+                  {hintRevealed.movie
+                    ? song.movie
+                        .replace(
+                          /\s*[\--]?\s*\(.*?(original motion picture soundtrack|ost|from.*?)\)/gi,
+                          "",
+                        ) // remove entire (Original Motion Picture Soundtrack)
+                        .replace(
+                          /\s*[\--]?\s*(original motion picture soundtrack|ost|from.*)/gi,
+                          "",
+                        ) // fallback for non-parentheses versions
+                        .replace(/\s*\)+$/, "") // remove leftover closing parenthesis
+                        .trim()
+                    : "Hidden"}
+                </span>
               </div>
             </div>
 
@@ -729,14 +745,14 @@ if (gameOver) {
               key={i}
               className={`p-3 rounded-lg ${
                 message.system
-                ? message.type === "crct-guess"
-                  ? "text-green-400 border border-green-400 bg-green-400/10 shadow-[0_0_10px_2px_rgba(34,197,94,0.5)]"             
+                  ? message.type === "crct-guess"
+                    ? "text-green-400 border border-green-400 bg-green-400/10 shadow-[0_0_10px_2px_rgba(34,197,94,0.5)]"
                     : message.type === "ai-hint"
-                    ? "text-purple-300 italic bg-[#2D2D2D]"
-                    : "text-gray-400 italic"
+                      ? "text-purple-300 italic bg-[#2D2D2D]"
+                      : "text-gray-400 italic"
                   : message.correct
-                  ? "text-green-400 bg-[#2D2D2D]"
-                  : "bg-[#2D2D2D]"
+                    ? "text-green-400 bg-[#2D2D2D]"
+                    : "bg-[#2D2D2D]"
               }`}
             >
               {message.system

@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 
 const avatars = Array.from({ length: 12 }, (_, i) => `/avatars/${i + 1}.png`);
 
-export default function AvatarSelector({ selectedAvatar = null, disabled = false }) {
+export default function AvatarSelector({
+  selectedAvatar = null,
+  disabled = false,
+}) {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -68,8 +71,8 @@ export default function AvatarSelector({ selectedAvatar = null, disabled = false
             alt="avatar"
             className={`w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] md:w-[100px] md:h-[100px] 
               rounded-[6px] transition-opacity duration-300 ${
-              fade ? "opacity-0" : "opacity-100"
-            }`}
+                fade ? "opacity-0" : "opacity-100"
+              }`}
           />
         </div>
 

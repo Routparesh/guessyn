@@ -1,4 +1,9 @@
-export default function GlowingButton({ text, onClick, color = "white", className = "" }) {
+export default function GlowingButton({
+  text,
+  onClick,
+  color = "white",
+  className = "",
+}) {
   const colorMap = {
     white: {
       bg: "bg-white",

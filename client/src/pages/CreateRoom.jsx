@@ -6,14 +6,13 @@ import sendIcon from "../assets/send.png";
 import spotcon from "../assets/spotify.png";
 import { auth } from "../config/firebase"; // <-- add
 
-
 const DEFAULT_PLAYLISTS = {
   Tamil: "316WvxScpeCbfvWVrTHfPa",
   Hindi: "4stlIpoPS7uKCsmUA7D8KZ",
   English: "2clGinIH6s1bj2TclAgKzW",
   Malayalam: "5tU4P1GOBDBs9nwfok79yD",
   Telugu: "1llHjtjECBo12ChwOGe38L",
-  Kannada: "6utix5lfPoZkBirWlRujqa"
+  Kannada: "6utix5lfPoZkBirWlRujqa",
 };
 
 const CreateRoom = () => {
@@ -30,23 +29,22 @@ const CreateRoom = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth >= 1024) {
-      document.body.style.overflow = "hidden"; // lock scroll
-    } else {
-      document.body.style.overflow = "auto";   // allow scroll
-    }
-  };
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        document.body.style.overflow = "hidden"; // lock scroll
+      } else {
+        document.body.style.overflow = "auto"; // allow scroll
+      }
+    };
 
-  handleResize(); // run on mount
-  window.addEventListener("resize", handleResize);
+    handleResize(); // run on mount
+    window.addEventListener("resize", handleResize);
 
-  return () => {
-    document.body.style.overflow = "auto"; // cleanup
-    window.removeEventListener("resize", handleResize);
-  };
-}, []);
-
+    return () => {
+      document.body.style.overflow = "auto"; // cleanup
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -74,7 +72,16 @@ const CreateRoom = () => {
           const x = Math.random() * window.innerWidth;
           const y = Math.random() * window.innerHeight;
           const opacity = Math.random() * 0.05 + 0.07;
-          blobs.push({ id: i, size, x, y, speedX, speedY, opacity, color: "#FFFB00" });
+          blobs.push({
+            id: i,
+            size,
+            x,
+            y,
+            speedX,
+            speedY,
+            opacity,
+            color: "#FFFB00",
+          });
         }
         setMovingBlobs(blobs);
       };
@@ -84,10 +91,12 @@ const CreateRoom = () => {
           prev.map((b) => {
             let x = b.x + b.speedX;
             let y = b.y + b.speedY;
-            if (x < 0 || x > window.innerWidth - b.size) b.speedX *= -1, (x = b.x + b.speedX);
-            if (y < 0 || y > window.innerHeight - b.size) b.speedY *= -1, (y = b.y + b.speedY);
+            if (x < 0 || x > window.innerWidth - b.size)
+              ((b.speedX *= -1), (x = b.x + b.speedX));
+            if (y < 0 || y > window.innerHeight - b.size)
+              ((b.speedY *= -1), (y = b.y + b.speedY));
             return { ...b, x, y };
-          })
+          }),
         );
         rafRef.current = requestAnimationFrame(animate);
       };
@@ -147,7 +156,10 @@ const CreateRoom = () => {
     const storedUser = JSON.parse(localStorage.getItem("user")) || {
       name: currentUser.displayName || "Player",
       uid: currentUser.uid,
-      avatar: localStorage.getItem("userAvatar") || currentUser.photoURL || "/avatars/1.png",
+      avatar:
+        localStorage.getItem("userAvatar") ||
+        currentUser.photoURL ||
+        "/avatars/1.png",
     };
     const token = await getToken();
 
@@ -207,7 +219,13 @@ const CreateRoom = () => {
           const room = {
             code: data.code,
             hostUID: storedUser.uid,
-            players: [{ uid: storedUser.uid, name: storedUser.name, avatar: storedUser.avatar }],
+            players: [
+              {
+                uid: storedUser.uid,
+                name: storedUser.name,
+                avatar: storedUser.avatar,
+              },
+            ],
           };
           localStorage.setItem("room", JSON.stringify(room));
           socket.auth = { uid: storedUser.uid };
@@ -215,7 +233,9 @@ const CreateRoom = () => {
           socket.emit("join-room", { roomCode: data.code, user: storedUser });
           navigate("/waiting-room");
         } else {
-          alert("❌ Failed to create room: " + (data.message || "Unauthorized"));
+          alert(
+            "❌ Failed to create room: " + (data.message || "Unauthorized"),
+          );
           setIsCreating(false);
         }
       } catch (err) {
@@ -229,7 +249,14 @@ const CreateRoom = () => {
   const showCreateBtn = selectedLanguage || spotifyConfirmed;
 
   // New: animated “COPIED” view support
-  const [displayChars, setDisplayChars] = useState(["_", "_", "_", "_", "_", "_"]);
+  const [displayChars, setDisplayChars] = useState([
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+  ]);
   const [showCopyLabel, setShowCopyLabel] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const timeoutsRef = useRef([]);
@@ -262,7 +289,7 @@ const CreateRoom = () => {
     const codeStr = String(roomCode).padStart(6, "0");
     // Start with underscores and reveal digits
     setDisplayChars(Array(6).fill("_"));
-    
+
     // Add a small delay before starting the reveal
     const initialT = setTimeout(() => {
       revealWord(codeStr, 120);
@@ -290,18 +317,21 @@ const CreateRoom = () => {
     });
 
     // After all underscores are shown, progressively reveal "COPIED"
-    const startCopiedReveal = setTimeout(() => {
-      "COPIED".split("").forEach((ch, idx) => {
-        const t = setTimeout(() => {
-          setDisplayChars((prev) => {
-            const next = [...prev];
-            next[idx] = ch;
-            return next;
-          });
-        }, idx * 100);
-        timeoutsRef.current.push(t);
-      });
-    }, displayChars.length * 80 + 200);
+    const startCopiedReveal = setTimeout(
+      () => {
+        "COPIED".split("").forEach((ch, idx) => {
+          const t = setTimeout(() => {
+            setDisplayChars((prev) => {
+              const next = [...prev];
+              next[idx] = ch;
+              return next;
+            });
+          }, idx * 100);
+          timeoutsRef.current.push(t);
+        });
+      },
+      displayChars.length * 80 + 200,
+    );
     timeoutsRef.current.push(startCopiedReveal);
 
     // Revert back to original code
@@ -318,11 +348,14 @@ const CreateRoom = () => {
         }, idx * 60);
         timeoutsRef.current.push(t);
       });
-      
+
       // Then reveal the original code
-      const finalReveal = setTimeout(() => {
-        revealWord(codeStr, 80);
-      }, 6 * 60 + 100);
+      const finalReveal = setTimeout(
+        () => {
+          revealWord(codeStr, 80);
+        },
+        6 * 60 + 100,
+      );
       timeoutsRef.current.push(finalReveal);
     }, 2200);
     timeoutsRef.current.push(revertT);
@@ -352,7 +385,6 @@ const CreateRoom = () => {
       {!isCreating && <Navbar />}
 
       <div className="flex-1 flex flex-col items-center px-4 py-6 sm:px-6 md:px-8 lg:justify-center lg:scale-125">
-
         {/* Title */}
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black mb-3 sm:mb-4 drop-shadow-[0_0_5px_#111] mt-6 sm:mt-10 text-center">
           Create A New Room
@@ -372,11 +404,11 @@ const CreateRoom = () => {
                 <span
                   key={i}
                   className="font-silkscreen text-2xl sm:text-xl md:text-2xl text-[#FFFB00] drop-shadow-[0_0_5px_#FFFB00]"
-                  style={{ 
-                    width: "1ch", 
-                    textAlign: "center", 
+                  style={{
+                    width: "1ch",
+                    textAlign: "center",
                     display: "inline-block",
-                    marginLeft: i === 1 ? "0.15ch" : "0" // Move "i" in COPIED slightly right
+                    marginLeft: i === 1 ? "0.15ch" : "0", // Move "i" in COPIED slightly right
                   }}
                 >
                   {ch || "_"}
@@ -404,9 +436,26 @@ const CreateRoom = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect x="8" y="2" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M9 12h6M9 16h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <rect
+                  x="8"
+                  y="2"
+                  width="8"
+                  height="4"
+                  rx="1"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M9 12h6M9 16h6"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -430,10 +479,18 @@ const CreateRoom = () => {
 
           {/* Players and Rounds Controls */}
           {[
-            { label: "NO. OF PLAYERS", value: players, set: setPlayers, max: 12 },
+            {
+              label: "NO. OF PLAYERS",
+              value: players,
+              set: setPlayers,
+              max: 12,
+            },
             { label: "NO. OF ROUNDS", value: rounds, set: setRounds, max: 20 },
           ].map((ctrl, i) => (
-            <div key={i} className="flex flex-col sm:flex-row justify-center items-center mb-4 sm:mb-6 gap-3 sm:gap-8">
+            <div
+              key={i}
+              className="flex flex-col sm:flex-row justify-center items-center mb-4 sm:mb-6 gap-3 sm:gap-8"
+            >
               <label className="w-full sm:w-[255px] font-silkscreen text-base sm:text-[1.275rem] whitespace-nowrap drop-shadow-[0_0_5px_#fff] text-center sm:text-left">
                 {ctrl.label}
               </label>
@@ -619,8 +676,8 @@ const CreateRoom = () => {
             animation: fadeIn 0.3s ease-out forwards;
           }
         `}</style>
-        </div> 
       </div>
+    </div>
     // </div>
   );
 };

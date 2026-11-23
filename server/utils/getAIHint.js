@@ -11,7 +11,7 @@ export const getAIHint = async (songName) => {
 
     const promptTemplate = PromptTemplate.fromTemplate(
       `Give me a fun, short, and helpful hint for the song '{songName}'.
-Avoid mentioning the title or giving it away directly. The hint should make it much easier to guess`
+Avoid mentioning the title or giving it away directly. The hint should make it much easier to guess`,
     );
 
     const formattedPrompt = await promptTemplate.format({ songName: songName });

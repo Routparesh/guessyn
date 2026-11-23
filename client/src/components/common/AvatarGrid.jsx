@@ -49,9 +49,11 @@ const AvatarGrid = ({ selected, onSelect }) => {
             key={i}
             onClick={() => handleSelect(i)}
             className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-xl overflow-hidden flex items-center justify-center cursor-pointer transition-all duration-200
-              ${isSelected || isHighlighted
-                ? "border-4 border-[#FFFB00] bg-[#FFFB00]/20 opacity-100 shadow-[0_0_15px_#FFFB00]"
-                : "opacity-40 border-2 border-gray-600"}
+              ${
+                isSelected || isHighlighted
+                  ? "border-4 border-[#FFFB00] bg-[#FFFB00]/20 opacity-100 shadow-[0_0_15px_#FFFB00]"
+                  : "opacity-40 border-2 border-gray-600"
+              }
               hover:opacity-100 hover:shadow-[0_0_10px_#FFFB00]`}
           >
             <img

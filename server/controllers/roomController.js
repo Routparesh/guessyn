@@ -15,7 +15,7 @@ export const createRoom = async (req, res) => {
     rounds,
     duration,
     languages,
-    rules
+    rules,
   } = req.body;
 
   console.log("Creating room with code:", code);
@@ -26,7 +26,11 @@ export const createRoom = async (req, res) => {
 
     if (useSpotify && playlistId) {
       const accessToken = await getSpotifyAccessToken();
-      playlist = await getSongsFromSpotifyPlaylist(playlistId, accessToken,rounds);
+      playlist = await getSongsFromSpotifyPlaylist(
+        playlistId,
+        accessToken,
+        rounds,
+      );
     } else {
       playlist = await Song.aggregate([{ $sample: { size: 10 } }]);
     }
@@ -35,16 +39,16 @@ export const createRoom = async (req, res) => {
       code,
       hostUID: uid,
       players: [{ uid, name, avatar }],
-settings: {
-  rounds,
-  duration,
-  language: req.body.language || "tamil",
-},
+      settings: {
+        rounds,
+        duration,
+        language: req.body.language || "tamil",
+      },
 
       playlist,
-      rules
+      rules,
     });
-    
+
     console.log("Attempting to save new room...");
     await newRoom.save();
     console.log("Room saved to MongoDB successfully!");

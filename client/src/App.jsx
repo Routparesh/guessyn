@@ -2,26 +2,25 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import CreateRoom from './pages/CreateRoom';
+import CreateRoom from "./pages/CreateRoom";
 import JoinRoom from "./pages/JoinRoom";
 import WaitingRoom from "./pages/WaitingRoom";
 import GameRoom from "./pages/GameRoom";
 import Profile from "./pages/Profile";
 import HowToPlay from "./pages/HowToPlay";
-import HomePage from './pages/HomePage';
-import AboutDev from './pages/AboutDev';
+import HomePage from "./pages/HomePage";
+import AboutDev from "./pages/AboutDev";
 
 function App() {
   return (
     <Router>
-      <InnerApp /> 
+      <InnerApp />
     </Router>
   );
 }
 
 // 👇 ADD this
 function InnerApp() {
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

@@ -32,7 +32,11 @@ const Signup = () => {
     if (!validateFields()) return;
 
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       await updateProfile(result.user, { displayName: name });
       const token = await result.user.getIdToken();
 
@@ -43,7 +47,7 @@ const Signup = () => {
           name,
           uid: result.user.uid,
           avatar: selectedAvatar,
-        })
+        }),
       );
 
       window.location.href = "/landing";
@@ -82,7 +86,7 @@ const Signup = () => {
           name: result.user.displayName || "Google User",
           uid: result.user.uid,
           avatar: selectedAvatar,
-        })
+        }),
       );
 
       window.location.href = "/landing";

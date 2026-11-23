@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
-import getYoutubeVideoId from './getYoutubeVideoId.js';
+import fetch from "node-fetch";
+import getYoutubeVideoId from "./getYoutubeVideoId.js";
 
 export async function getSongsFromSpotifyPlaylist(playlistId, accessToken) {
   let songs = [];
@@ -7,7 +7,7 @@ export async function getSongsFromSpotifyPlaylist(playlistId, accessToken) {
 
   while (nextUrl) {
     const res = await fetch(nextUrl, {
-      headers: { Authorization: `Bearer ${accessToken}` }
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     const data = await res.json();
@@ -19,7 +19,7 @@ export async function getSongsFromSpotifyPlaylist(playlistId, accessToken) {
 
       const songName = track.name;
       const artistName = track.artists?.[0]?.name || "";
-      const composer = track.artists.map(a => a.name).join(", ");
+      const composer = track.artists.map((a) => a.name).join(", ");
       const movie = track.album.name;
       const cover = track.album.images?.[0]?.url || "";
 
@@ -30,7 +30,7 @@ export async function getSongsFromSpotifyPlaylist(playlistId, accessToken) {
         movie,
         composer,
         cover,
-        videoId
+        videoId,
       });
     }
 

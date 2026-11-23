@@ -9,10 +9,10 @@ export default function LandingPage() {
   const userData = JSON.parse(localStorage.getItem("user"));
 
   const [name, setName] = useState(
-    userData?.name || localStorage.getItem("userName") || ""
+    userData?.name || localStorage.getItem("userName") || "",
   );
   const [avatar, setAvatar] = useState(
-    userData?.avatar || localStorage.getItem("userAvatar") || null
+    userData?.avatar || localStorage.getItem("userAvatar") || null,
   );
   const [greeted, setGreeted] = useState(!!userData || (!!name && !!avatar));
   const [isSignedUp, setIsSignedUp] = useState(!!userData);

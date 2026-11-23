@@ -1,29 +1,29 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Firebase user
   const [isGuest, setIsGuest] = useState(false);
-  const [guestName, setGuestName] = useState('');
-  const [guestAvatar, setGuestAvatar] = useState('');
-  const [authType, setAuthType] = useState(''); // 'user' | 'guest' | ''
+  const [guestName, setGuestName] = useState("");
+  const [guestAvatar, setGuestAvatar] = useState("");
+  const [authType, setAuthType] = useState(""); // 'user' | 'guest' | ''
 
   useEffect(() => {
     // Load Firebase user if exists
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
       setUser(storedUser);
-      setAuthType('user');
+      setAuthType("user");
     }
 
     // Load guest data if exists
-    const storedGuest = JSON.parse(localStorage.getItem('guest'));
+    const storedGuest = JSON.parse(localStorage.getItem("guest"));
     if (storedGuest && storedGuest.name) {
       setIsGuest(true);
       setGuestName(storedGuest.name);
-      setGuestAvatar(storedGuest.avatar || '');
-      setAuthType('guest');
+      setGuestAvatar(storedGuest.avatar || "");
+      setAuthType("guest");
     }
   }, []);
 
@@ -31,22 +31,22 @@ const AuthProvider = ({ children }) => {
     setIsGuest(true);
     setGuestName(name);
     setGuestAvatar(avatar);
-    setAuthType('guest');
-    localStorage.setItem('guest', JSON.stringify({ name, avatar }));
+    setAuthType("guest");
+    localStorage.setItem("guest", JSON.stringify({ name, avatar }));
   };
 
   const logoutGuest = () => {
     setIsGuest(false);
-    setGuestName('');
-    setGuestAvatar('');
-    setAuthType('');
-    localStorage.removeItem('guest');
+    setGuestName("");
+    setGuestAvatar("");
+    setAuthType("");
+    localStorage.removeItem("guest");
   };
 
   const logout = () => {
     setUser(null);
-    setAuthType('');
-    localStorage.removeItem('user');
+    setAuthType("");
+    localStorage.removeItem("user");
     logoutGuest(); // Also clears guest if any
   };
 

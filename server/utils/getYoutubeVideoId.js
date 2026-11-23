@@ -1,4 +1,4 @@
-import { YouTube } from 'youtube-sr';
+import { YouTube } from "youtube-sr";
 
 /**
  * Search YouTube for the first video matching the query and return its videoId.
@@ -10,7 +10,7 @@ export default async function getYoutubeVideoId(query) {
     const results = await YouTube.search(query, { limit: 1 });
     return results?.[0]?.id?.videoId ?? null;
   } catch (err) {
-    console.error('YouTube search error:', err);
+    console.error("YouTube search error:", err);
     return null;
   }
 }

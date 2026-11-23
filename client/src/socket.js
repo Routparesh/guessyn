@@ -16,8 +16,8 @@ const socket = io("https://guessync.onrender.com/", {
 
   query: {
     clientType: "player",
-    version: "1.0"
-  }
+    version: "1.0",
+  },
 });
 
 socket

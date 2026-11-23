@@ -11,7 +11,9 @@ describe("JoinRoom Page", () => {
     renderWithRouter(<JoinRoom />);
     const joinBtn = screen.getByRole("button", { name: /join/i });
     fireEvent.click(joinBtn);
-    expect(screen.getByText(/please enter a 6-digit code/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please enter a 6-digit code/i),
+    ).toBeInTheDocument();
   });
 
   test("2. Displays typed number on button click", () => {
@@ -50,6 +52,8 @@ describe("Signup Page", () => {
     renderWithRouter(<Signup />);
     const googleBtn = screen.getByText(/Sign Up With Google/i);
     fireEvent.click(googleBtn);
-    expect(screen.getByText("Choose an avatar before continuing")).toBeInTheDocument();
+    expect(
+      screen.getByText("Choose an avatar before continuing"),
+    ).toBeInTheDocument();
   });
 });

@@ -35,7 +35,7 @@ const Login = () => {
           name: result.user.displayName || email,
           uid: result.user.uid,
           avatar: result.user.photoURL || "",
-        })
+        }),
       );
 
       window.location.href = "/landing";
@@ -83,7 +83,7 @@ const Login = () => {
             existingUser?.uid === result.user.uid
               ? existingUser.avatar
               : selectedAvatar,
-        })
+        }),
       );
 
       window.location.href = "/landing";

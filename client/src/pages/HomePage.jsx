@@ -36,13 +36,16 @@ const HomePage = () => {
         setTimeout(() => {
           for (let i = 0; i < framesPerLetter; i++) {
             timeoutIds.push(
-              setTimeout(() => {
-                setLetters((prev) => {
-                  const newLetters = [...prev];
-                  newLetters[index] = getRandomChar();
-                  return newLetters;
-                });
-              }, i * (spinDuration / framesPerLetter))
+              setTimeout(
+                () => {
+                  setLetters((prev) => {
+                    const newLetters = [...prev];
+                    newLetters[index] = getRandomChar();
+                    return newLetters;
+                  });
+                },
+                i * (spinDuration / framesPerLetter),
+              ),
             );
           }
 
@@ -53,9 +56,9 @@ const HomePage = () => {
                 newLetters[index] = targetLetter;
                 return newLetters;
               });
-            }, spinDuration)
+            }, spinDuration),
           );
-        }, index * letterDelay)
+        }, index * letterDelay),
       );
     });
 
@@ -108,7 +111,7 @@ const HomePage = () => {
           }
 
           return { ...blob, x: newX, y: newY };
-        })
+        }),
       );
       requestAnimationFrame(animateBlobs);
     };
@@ -219,7 +222,8 @@ const HomePage = () => {
         <p className="text-base sm:text-lg md:text-xl text-white max-w-md sm:max-w-lg md:max-w-2xl mx-auto leading-relaxed px-2">
           Fast-paced multiplayer music guessing game.
           <br className="hidden sm:block" />
-          Play with friends, guess songs in seconds, and race to the top of the leaderboard.
+          Play with friends, guess songs in seconds, and race to the top of the
+          leaderboard.
         </p>
         <div className="flex flex-wrap justify-center items-center gap-3 mt-4">
           <div className="skill-box hover-trigger">

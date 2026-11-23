@@ -126,17 +126,22 @@ const AboutDev = () => {
 
             <h2 className="text-sm sm:text-base lg:text-lg mt-2 text-white mb-3 tracking-wider flex items-center gap-2">
               <i className="fas fa-laptop-code text-[#FFFB00]"></i> Developer of{" "}
-              <span className="font-silkscreen">Gues<span className="text-white">sync</span></span>
+              <span className="font-silkscreen">
+                Gues<span className="text-white">sync</span>
+              </span>
             </h2>
 
             <p className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">
-              I'm a full-stack developer who loves crafting playful, real-time web apps.
-              Guessync was built pixel-by-pixel to bring that retro arcade magic back to life,
-              blending music, fast guessing, and teamwork into pure fun. 🚀
+              I'm a full-stack developer who loves crafting playful, real-time
+              web apps. Guessync was built pixel-by-pixel to bring that retro
+              arcade magic back to life, blending music, fast guessing, and
+              teamwork into pure fun. 🚀
             </p>
 
             <div className="mt-4">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-wider">My Tech Stack</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-wider">
+                My Tech Stack
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, index) => (
                   <div key={index} className="skill-box">
@@ -151,19 +156,44 @@ const AboutDev = () => {
           {/* Social + CTA */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-0 mt-6">
             <div className="flex gap-5">
-              <a href="https://yogeshwaran-manivannan.netlify.app/" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a
+                href="https://yogeshwaran-manivannan.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
                 <i className="fas fa-globe"></i>
               </a>
-              <a href="https://github.com/yep-yogesh" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a
+                href="https://github.com/yep-yogesh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
                 <i className="fab fa-github"></i>
               </a>
-              <a href="https://www.linkedin.com/in/yogeshwaran-m-3b19452a9/" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a
+                href="https://www.linkedin.com/in/yogeshwaran-m-3b19452a9/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
                 <i className="fab fa-linkedin"></i>
               </a>
-              <a href="https://www.instagram.com/wtfisyogesh" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a
+                href="https://www.instagram.com/wtfisyogesh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://leetcode.com/u/yogeshhhhhh/" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a
+                href="https://leetcode.com/u/yogeshhhhhh/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-icon"
+              >
                 <i className="fas fa-code"></i>
               </a>
             </div>

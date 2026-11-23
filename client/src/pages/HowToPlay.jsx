@@ -11,8 +11,8 @@ const HowToPlay = () => {
     [0, 1, 2].forEach((index) => {
       timeouts.push(
         setTimeout(() => {
-          setVisibleSteps(prev => [...prev, index]);
-        }, index * 300)
+          setVisibleSteps((prev) => [...prev, index]);
+        }, index * 300),
       );
     });
 
@@ -75,14 +75,18 @@ const HowToPlay = () => {
           {/* Heading */}
           <h1 className="main-heading text-3xl sm:text-4xl lg:text-5xl font-black font-montserrat">
             How to Play
-            <span className="text-[#FFFB00] drop-shadow-[0_0_15px_#FFFB00]"> ?</span>
+            <span className="text-[#FFFB00] drop-shadow-[0_0_15px_#FFFB00]">
+              {" "}
+              ?
+            </span>
           </h1>
 
           {/* Steps Wrapper */}
           <div className="mt-12 flex flex-col gap-16 sm:gap-20 lg:gap-24 items-center w-full">
-            
             {/* Step 1 */}
-            <div className={`step-container flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(0) ? 'opacity-100' : 'opacity-0'}`}>
+            <div
+              className={`step-container flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(0) ? "opacity-100" : "opacity-0"}`}
+            >
               <div className="step-number w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-[#FFFB00] shadow-[0_0_25px_#FFFB00] flex items-center justify-center text-black text-3xl sm:text-4xl lg:text-5xl font-black">
                 1
               </div>
@@ -114,7 +118,9 @@ const HowToPlay = () => {
             </div>
 
             {/* Step 2 */}
-            <div className={`step-container flex flex-col sm:flex-row-reverse items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(1) ? 'opacity-100' : 'opacity-0'}`}>
+            <div
+              className={`step-container flex flex-col sm:flex-row-reverse items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(1) ? "opacity-100" : "opacity-0"}`}
+            >
               <div className="step-number w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-[#FFFB00] shadow-[0_0_25px_#FFFB00] flex items-center justify-center text-black text-3xl sm:text-4xl lg:text-5xl font-black">
                 2
               </div>
@@ -146,7 +152,9 @@ const HowToPlay = () => {
             </div>
 
             {/* Step 3 */}
-            <div className={`step-container flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(2) ? 'opacity-100' : 'opacity-0'}`}>
+            <div
+              className={`step-container flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-14 w-full ${visibleSteps.includes(2) ? "opacity-100" : "opacity-0"}`}
+            >
               <div className="step-number w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-[#FFFB00] shadow-[0_0_25px_#FFFB00] flex items-center justify-center text-black text-3xl sm:text-4xl lg:text-5xl font-black">
                 3
               </div>
@@ -176,7 +184,6 @@ const HowToPlay = () => {
                 </p>
               </div>
             </div>
-
           </div>
         </section>
       </div>

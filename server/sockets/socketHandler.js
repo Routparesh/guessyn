@@ -42,7 +42,7 @@ const socketHandler = (io) => {
             players: room.players,
             hintsUsed: room.hintUsed || {},
           });
-        });        
+        });
       } catch (err) {
         console.error("Join-room error:", err);
       }
@@ -60,7 +60,12 @@ const socketHandler = (io) => {
         room.guesses = [];
         room.guessedCorrectlyThisRound = [];
         room.hintVotes = { movie: [], composer: [], cover: [], ai: [] };
-        room.hintUsed = { movie: false, composer: false, cover: false, ai: false };
+        room.hintUsed = {
+          movie: false,
+          composer: false,
+          cover: false,
+          ai: false,
+        };
         await room.save();
 
         io.to(roomCode).emit("move-to-game-room");
@@ -79,7 +84,10 @@ const socketHandler = (io) => {
         if (!room || !room.isActive) return;
 
         const song = room.playlist[room.currentSongIndex];
-        const correct = fuzzyMatch(song.song.trim().toLowerCase(), text.trim().toLowerCase());
+        const correct = fuzzyMatch(
+          song.song.trim().toLowerCase(),
+          text.trim().toLowerCase(),
+        );
 
         room.guesses.push({ uid: user.uid, text, correct });
         const player = room.players.find((p) => p.uid === user.uid);
@@ -111,9 +119,15 @@ const socketHandler = (io) => {
         if (!room || !room.isActive) return;
 
         room.hintVotes ??= { movie: [], composer: [], cover: [], ai: [] };
-        room.hintUsed ??= { movie: false, composer: false, cover: false, ai: false };
+        room.hintUsed ??= {
+          movie: false,
+          composer: false,
+          cover: false,
+          ai: false,
+        };
 
-        if (room.hintUsed[hintType] || room.hintVotes[hintType].includes(uid)) return;
+        if (room.hintUsed[hintType] || room.hintVotes[hintType].includes(uid))
+          return;
 
         room.hintVotes[hintType].push(uid);
         await room.save();
@@ -121,14 +135,20 @@ const socketHandler = (io) => {
         const totalPlayers = room.players.length;
         const votes = room.hintVotes[hintType].length;
 
-        io.to(roomCode).emit("hint-vote-count", { hintType, votes, totalPlayers });
+        io.to(roomCode).emit("hint-vote-count", {
+          hintType,
+          votes,
+          totalPlayers,
+        });
 
         if (votes >= Math.ceil(totalPlayers / 2)) {
           room.hintUsed[hintType] = true;
           await room.save();
 
           if (hintType === "ai") {
-            const aiHint = await getAIHint(room.playlist[room.currentSongIndex]?.song);
+            const aiHint = await getAIHint(
+              room.playlist[room.currentSongIndex]?.song,
+            );
             io.to(roomCode).emit("reveal-hint", { hintType: "ai", aiHint });
           } else {
             io.to(roomCode).emit("reveal-hint", { hintType });
@@ -164,7 +184,7 @@ const startRound = async (roomCode, io) => {
 
     activeTimers.set(
       roomCode,
-      setTimeout(() => endRound(roomCode, io), room.settings.duration * 1000)
+      setTimeout(() => endRound(roomCode, io), room.settings.duration * 1000),
     );
   } catch (err) {
     console.error("Start-round error:", err);
@@ -197,7 +217,7 @@ const endRound = async (roomCode, io) => {
 
     activeTimers.set(
       roomCode,
-      setTimeout(() => nextRound(roomCode, io), 5000)
+      setTimeout(() => nextRound(roomCode, io), 5000),
     );
   } catch (err) {
     console.error("End-round error:", err);
@@ -217,7 +237,10 @@ const nextRound = async (roomCode, io) => {
     room.hintVotes = { movie: [], composer: [], cover: [], ai: [] };
     room.hintUsed = { movie: false, composer: false, cover: false, ai: false };
 
-    if (room.currentSongIndex >= room.playlist.length || room.currentRound > room.settings.rounds) {
+    if (
+      room.currentSongIndex >= room.playlist.length ||
+      room.currentRound > room.settings.rounds
+    ) {
       await room.save();
       io.to(roomCode).emit("game-over", {
         leaderboard: room.players.sort((a, b) => b.score - a.score),

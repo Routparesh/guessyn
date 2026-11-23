@@ -6,7 +6,15 @@ const Profile = () => {
   const navigate = useNavigate();
 
   // Reusable tape band (now supports bottom, opacity, and z-index)
-  const TapeBand = ({ top, bottom, angle = -12, speed = 16, reverse = false, opacity = 1, z = 1 }) => {
+  const TapeBand = ({
+    top,
+    bottom,
+    angle = -12,
+    speed = 16,
+    reverse = false,
+    opacity = 1,
+    z = 1,
+  }) => {
     const phrase = "UNDER CONSTRUCTION ⚠ WARNING ⚠";
     const Row = () => (
       <>
@@ -71,10 +79,14 @@ const Profile = () => {
           🚧
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 tracking-wide sm:tracking-widest">
-          UNDER <span className="text-[#FFFB00] drop-shadow-[0_0_5px_#FFFB00]">Development</span>
+          UNDER{" "}
+          <span className="text-[#FFFB00] drop-shadow-[0_0_5px_#FFFB00]">
+            Development
+          </span>
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-xs sm:max-w-md font-montserrat leading-relaxed">
-          We're cookin' something awesome here. Your profile page will be live very soon!
+          We're cookin' something awesome here. Your profile page will be live
+          very soon!
         </p>
         {/* Moved CTA below the paragraph */}
         <button

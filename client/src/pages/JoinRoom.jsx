@@ -13,7 +13,10 @@ export default function JoinRoom() {
 
   // Tooltip + paste support
   const [showPasteTip, setShowPasteTip] = useState(false);
-  const [pasteTip, setPasteTip] = useState({ text: "Click to paste code", type: "info" });
+  const [pasteTip, setPasteTip] = useState({
+    text: "Click to paste code",
+    type: "info",
+  });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const tipTimeoutRef = useRef(null);
 
@@ -86,11 +89,13 @@ export default function JoinRoom() {
     tryExtractAndAnimate(txt);
   };
 
-  const handleDisplayMouseEnter = () => showTip("Click to paste code", "info", 0);
+  const handleDisplayMouseEnter = () =>
+    showTip("Click to paste code", "info", 0);
   const handleDisplayMouseLeave = () => {
     if (pasteTip.type !== "error") setShowPasteTip(false);
   };
-  const handleDisplayMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
+  const handleDisplayMouseMove = (e) =>
+    setMousePos({ x: e.clientX, y: e.clientY });
 
   const handleDigit = (digit) => {
     if (code.length < 6) {
@@ -134,7 +139,10 @@ export default function JoinRoom() {
     const storedUser = JSON.parse(localStorage.getItem("user")) || {
       name: currentUser.displayName || "Player",
       uid: currentUser.uid,
-      avatar: localStorage.getItem("userAvatar") || currentUser.photoURL || "/avatars/1.png",
+      avatar:
+        localStorage.getItem("userAvatar") ||
+        currentUser.photoURL ||
+        "/avatars/1.png",
     };
 
     try {
@@ -252,7 +260,9 @@ export default function JoinRoom() {
             <div className="mt-3 sm:mt-6 mb-6 absolute top-1 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 whitespace-nowrap">
               Enter Room Code
             </div>
-            <div className="mt-3 sm:mt-6">{code.padEnd(6, "_").split("").join(" ")}</div>
+            <div className="mt-3 sm:mt-6">
+              {code.padEnd(6, "_").split("").join(" ")}
+            </div>
 
             {/* Mobile-only subtle hint inside display */}
             <div className="absolute inset-x-0 bottom-1 sm:hidden pointer-events-none text-[10px] text-black/50 font-silkscreen">
@@ -260,7 +270,9 @@ export default function JoinRoom() {
             </div>
 
             {error && (
-              <div className="text-red-600 text-[8px] text-center mt-3">{error}</div>
+              <div className="text-red-600 text-[8px] text-center mt-3">
+                {error}
+              </div>
             )}
           </div>
 
@@ -271,7 +283,7 @@ export default function JoinRoom() {
                 ref={(el) => (buttonRefs.current[digit] = el)}
                 onClick={() => handleDigit(digit.toString())}
                 className={`bg-gray-200 text-black text-xl font-silkscreen py-5 px-0 border-4 border-black shadow-[4px_4px_0_#000] hover:bg-gray-300 transition-all duration-150 ${getButtonActiveClass(
-                  digit
+                  digit,
                 )} w-[80px] cursor-pointer`}
               >
                 {digit}
@@ -282,7 +294,7 @@ export default function JoinRoom() {
               ref={(el) => (buttonRefs.current["0"] = el)}
               onClick={() => handleDigit("0")}
               className={`bg-gray-200 text-black text-xl py-5 px-0 border-4 border-black font-silkscreen shadow-[4px_4px_0_#000] hover:bg-gray-300 transition-all duration-150 ${getButtonActiveClass(
-                "0"
+                "0",
               )} w-[80px] cursor-pointer`}
             >
               0
@@ -292,7 +304,7 @@ export default function JoinRoom() {
               ref={(el) => (buttonRefs.current["join"] = el)}
               onClick={handleJoin}
               className={`w-[177px] col-span-2 bg-black text-white text-lg py-0 font-silkscreen border-4 border-black shadow-[4px_4px_0_#000] hover:bg-gray-200 hover:text-black transition-all duration-150 ${getButtonActiveClass(
-                "join"
+                "join",
               )} cursor-pointer`}
             >
               JOIN 🏠

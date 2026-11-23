@@ -66,13 +66,16 @@ const WaitingRoom = () => {
         return;
       }
       // Detect new players
-      const newOnes = data.players.filter((p) => !prevPlayersRef.current.has(p.uid));
+      const newOnes = data.players.filter(
+        (p) => !prevPlayersRef.current.has(p.uid),
+      );
       if (newOnes.length) {
         setArrivalGlow((old) => {
           const next = { ...old };
           newOnes.forEach((p) => {
             next[p.uid] = true;
-            if (arrivalTimersRef.current[p.uid]) clearTimeout(arrivalTimersRef.current[p.uid]);
+            if (arrivalTimersRef.current[p.uid])
+              clearTimeout(arrivalTimersRef.current[p.uid]);
             arrivalTimersRef.current[p.uid] = setTimeout(() => {
               setArrivalGlow((curr) => {
                 const n = { ...curr };
@@ -111,8 +114,8 @@ const WaitingRoom = () => {
     if (!avatar) return "/avatars/1.png";
     if (typeof avatar === "number") return `/avatars/${avatar}.png`;
     if (typeof avatar === "string") {
-      if (/^https?:\/\//.test(avatar)) return avatar;         // absolute URL
-      if (avatar.startsWith("/avatars/")) return avatar;       // already a path
+      if (/^https?:\/\//.test(avatar)) return avatar; // absolute URL
+      if (avatar.startsWith("/avatars/")) return avatar; // already a path
       if (/^\d+$/.test(avatar)) return `/avatars/${avatar}.png`; // numeric string
       return avatar; // fallback as-is
     }
@@ -139,7 +142,16 @@ const WaitingRoom = () => {
         const x = Math.random() * window.innerWidth;
         const y = Math.random() * window.innerHeight;
         const opacity = Math.random() * 0.05 + 0.07;
-        blobs.push({ id: i, size, x, y, speedX, speedY, opacity, color: "#FFFB00" });
+        blobs.push({
+          id: i,
+          size,
+          x,
+          y,
+          speedX,
+          speedY,
+          opacity,
+          color: "#FFFB00",
+        });
       }
       setMovingBlobs(blobs);
 
@@ -148,10 +160,12 @@ const WaitingRoom = () => {
           prev.map((b) => {
             let x = b.x + b.speedX;
             let y = b.y + b.speedY;
-            if (x < 0 || x > window.innerWidth - b.size) b.speedX *= -1, (x = b.x + b.speedX);
-            if (y < 0 || y > window.innerHeight - b.size) b.speedY *= -1, (y = b.y + b.speedY);
+            if (x < 0 || x > window.innerWidth - b.size)
+              ((b.speedX *= -1), (x = b.x + b.speedX));
+            if (y < 0 || y > window.innerHeight - b.size)
+              ((b.speedY *= -1), (y = b.y + b.speedY));
             return { ...b, x, y };
-          })
+          }),
         );
         rafRef.current = requestAnimationFrame(animate);
       };
@@ -202,25 +216,37 @@ const WaitingRoom = () => {
       {/* Players Section */}
       <div className="w-full lg:w-[22%] bg-[#1a1a1ab8] rounded-xl p-3 sm:p-4 lg:p-5 flex flex-col order-1 lg:order-none h-[45vh] lg:h-full overflow-hidden">
         <div className="flex-1">
-          <h2 className="text-white text-base sm:text-lg lg:text-xl mb-2">Players ({players.length})</h2>
+          <h2 className="text-white text-base sm:text-lg lg:text-xl mb-2">
+            Players ({players.length})
+          </h2>
           <ul className="h-full overflow-y-auto custom-scrollbar space-y-1 sm:space-y-2 lg:space-y-3">
             {players.map((p) => (
               <li
                 key={p.uid}
                 className={`flex items-center gap-2 bg-[#2d2d2d58] p-2 rounded-lg transition-all duration-300 ${
-                  arrivalGlow[p.uid] ? "animate-neon-punch ring-2 ring-[#FFFB00]/70 shadow-[0_0_18px_#FFFB00]" : ""
+                  arrivalGlow[p.uid]
+                    ? "animate-neon-punch ring-2 ring-[#FFFB00]/70 shadow-[0_0_18px_#FFFB00]"
+                    : ""
                 }`}
               >
                 <img
                   src={getAvatarSrc(p.avatar)}
                   alt={p.name}
                   className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-sm"
-                  onError={(e) => { e.currentTarget.src = "/avatars/1.png"; }}
+                  onError={(e) => {
+                    e.currentTarget.src = "/avatars/1.png";
+                  }}
                 />
-                <span className={`text-xs sm:text-sm lg:text-base ${p.uid === currentUID ? "text-[#FFFB00]" : ""}`}>
+                <span
+                  className={`text-xs sm:text-sm lg:text-base ${p.uid === currentUID ? "text-[#FFFB00]" : ""}`}
+                >
                   {p.name}
                   {p.uid === hostUID && (
-                    <i className="fa-solid fa-crown text-[#FFFB00] ml-3" aria-label="Host" title="Host" />
+                    <i
+                      className="fa-solid fa-crown text-[#FFFB00] ml-3"
+                      aria-label="Host"
+                      title="Host"
+                    />
                   )}
                 </span>
               </li>
@@ -255,9 +281,14 @@ const WaitingRoom = () => {
           }
         }}
       >
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4 text-center">Waiting Room</h1>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4 text-center">
+          Waiting Room
+        </h1>
         <p className="text-gray-300 text-sm sm:text-base lg:text-lg mb-2 text-center px-4">
-          Room Code: <span className="text-white font-mono text-base sm:text-lg lg:text-xl">{roomCode}</span>
+          Room Code:{" "}
+          <span className="text-white font-mono text-base sm:text-lg lg:text-xl">
+            {roomCode}
+          </span>
         </p>
         {!isHost && (
           <div className="mt-3 sm:mt-4 lg:mt-6 text-[#FFFB00] text-center text-sm sm:text-base lg:text-lg px-4 flex items-center justify-center gap-2">
@@ -272,9 +303,13 @@ const WaitingRoom = () => {
 
       {/* Chat Section */}
       <div className="w-full lg:w-[22%] bg-[#1a1a1ab8] rounded-xl p-3 sm:p-4 lg:p-5 flex flex-col order-3 lg:order-none h-[30%] lg:h-full">
-        <h2 className="text-white text-base sm:text-lg lg:text-xl mb-2 sm:mb-3">Chat</h2>
+        <h2 className="text-white text-base sm:text-lg lg:text-xl mb-2 sm:mb-3">
+          Chat
+        </h2>
         <div className="flex-1 bg-[#2d2d2d58] rounded-lg p-2 sm:p-2 lg:p-3 overflow-y-auto">
-          <p className="text-gray-400 italic text-xs sm:text-xs lg:text-sm">System: Waiting for game to start...</p>
+          <p className="text-gray-400 italic text-xs sm:text-xs lg:text-sm">
+            System: Waiting for game to start...
+          </p>
         </div>
       </div>
 
