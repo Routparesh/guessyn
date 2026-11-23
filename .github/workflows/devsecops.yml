@@ -7,3 +7,6 @@ on:
 jobs:
   code-lint:
     uses: './.github/workflows/code-lint.yml'
+
+  code-scan:
+    uses: './.github/workflows/code-security.yml'

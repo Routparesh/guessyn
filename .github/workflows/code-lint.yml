@@ -20,7 +20,8 @@ jobs:
           cache: 'npm'
 
       - name: Install Node.js dependencies
-        run: npm install eslint prettier
+        run: npm ci
+        working-directory: ${{ matrix.folder }}
 
       - name: Run linters
         uses: wearerequired/lint-action@v3
