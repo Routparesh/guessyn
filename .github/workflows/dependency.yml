@@ -5,6 +5,9 @@ on: workflow_call
 jobs:
   depchecktest:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [client, server]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
