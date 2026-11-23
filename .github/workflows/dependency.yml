@@ -19,10 +19,8 @@ jobs:
           project: 'test'
           path: '${{ matrix.folder }}'
           format: 'HTML'
-          out: 'reports' # this is the default, no need to specify unless you wish to override it
-          args: >
-            --failOnCVSS 7
-            --enableRetired
+          out: 'reports'
+
       - name: Upload Test results
         uses: actions/upload-artifact@master
         with:
