@@ -1,0 +1,8 @@
+name: devsecops
+
+on:
+  push: [master]
+
+jobs:
+  code-lint:
+    uses: './.github/workflows/code-lint.yml'

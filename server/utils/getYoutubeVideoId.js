@@ -1,14 +1,16 @@
-import fetch from 'node-fetch';
+import { YouTube } from 'youtube-sr';
 
+/**
+ * Search YouTube for the first video matching the query and return its videoId.
+ * This uses the `youtube-sr` library which performs a scrape‑based search and does
+ * not require a Google Cloud API key.
+ */
 export default async function getYoutubeVideoId(query) {
-  const apiKey = process.env.YOUTUBE_API_KEY;
-  const encodedQuery = encodeURIComponent(query);
-
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodedQuery}&key=${apiKey}&type=video&maxResults=1`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-
-  const videoId = data.items?.[0]?.id?.videoId || null;
-  return videoId;
+  try {
+    const results = await YouTube.search(query, { limit: 1 });
+    return results?.[0]?.id?.videoId ?? null;
+  } catch (err) {
+    console.error('YouTube search error:', err);
+    return null;
+  }
 }

@@ -1,21 +1,14 @@
 import dotenv from "dotenv";
-import axios from "axios";
-import mongoose from "mongoose";
+import { YouTube } from "youtube-sr";
 import Song from "../models/Song.js";
 import connectDB from "../config/db.js";
 
 dotenv.config();
 await connectDB();
 
-const API_KEY = process.env.YOUTUBE_API_KEY;
-
 const searchYouTubeVideoId = async (query) => {
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${encodeURIComponent(
-    query
-  )}&key=${API_KEY}`;
-
-  const res = await axios.get(url);
-  return res.data.items?.[0]?.id?.videoId || null;
+  const results = await YouTube.search(query, { limit: 1 });
+  return results?.[0]?.id?.videoId ?? null;
 };
 
 try {
