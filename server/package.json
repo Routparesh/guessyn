@@ -20,7 +20,6 @@
     "axios": "^1.8.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "eslint": "^10.15.0",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.1",
     "firebase-admin": "^13.2.0",
@@ -38,6 +37,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
     "nodemon": "^3.1.9"
   }
 }
