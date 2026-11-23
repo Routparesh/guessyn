@@ -37,6 +37,7 @@
     "youtube-sr": "^4.3.12"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "nodemon": "^3.1.9"
   }
 }
