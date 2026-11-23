@@ -17,3 +17,6 @@ jobs:
 
   dependency-scan:
     uses: './.github/workflows/dependency.yml'
+
+  sbom-generate:
+    uses: './.github/workflows/sbom.yml'
