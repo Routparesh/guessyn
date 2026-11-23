@@ -6,6 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         folder: [client, server]
 
@@ -23,13 +24,14 @@ jobs:
         run: npm ci
         working-directory: ${{ matrix.folder }}
 
-      - uses: advanced-security/sbom-generator-action@v0.0.1
+      - uses: anchore/sbom-action@v0
         id: sbom
         with:
           path: ${{ matrix.folder }}
+          output-file: ${{ matrix.folder }}-sbom.spdx.json
           format: spdx-json
-          output-file: sbom.spdx.json
           upload-artifact: false
+          upload-release-assets: false
 
       - uses: actions/upload-artifact@master
         with:
