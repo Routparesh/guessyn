@@ -1,7 +1,8 @@
 name: devsecops
 
 on:
-  push: [master]
+  push:
+    branches: [master]
 
 jobs:
   code-lint:
