@@ -14,3 +14,6 @@ jobs:
 
   code-scan:
     uses: './.github/workflows/code-security.yml'
+
+  dependency-scan:
+    uses: './.github/workflows/dependency.yml'
