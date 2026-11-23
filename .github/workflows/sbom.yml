@@ -33,7 +33,9 @@ jobs:
           upload-artifact: false
           upload-release-assets: false
 
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v4
         with:
-          path: ${{steps.sbom.outputs.fileName }}
-          name: 'SBOM'
+          path: ${{ matrix.folder }}-sbom.spdx.json
+          name: ${{ matrix.folder }}-SBOM
+          if-no-files-found: error
+          retention-days: 30
