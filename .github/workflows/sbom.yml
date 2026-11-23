@@ -27,8 +27,9 @@ jobs:
         id: sbom
         with:
           path: ${{ matrix.folder }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+          upload-artifact: false
 
       - uses: actions/upload-artifact@master
         with:
