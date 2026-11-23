@@ -5,12 +5,28 @@ on: workflow_call
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [client, server]
 
     steps:
       - uses: actions/checkout@v7
 
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.folder }}/package-lock.json
+
+      - name: Install Node.js dependencies
+        run: npm ci
+        working-directory: ${{ matrix.folder }}
+
       - uses: advanced-security/sbom-generator-action@v0.0.1
         id: sbom
+        with:
+          path: ${{ matrix.folder }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
