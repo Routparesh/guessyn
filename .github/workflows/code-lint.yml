@@ -30,3 +30,5 @@ jobs:
           eslint: true
           prettier: true
           eslint_dir: ${{ matrix.folder }}
+          prettier_dir: ${{ matrix.folder }}
+          eslint_args: '--config ${{ matrix.folder }}/eslint.config.js'
